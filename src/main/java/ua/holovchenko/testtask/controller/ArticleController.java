@@ -19,7 +19,7 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> getArticles(@RequestParam Integer page, @RequestParam Integer size) {
+    public ResponseEntity<List<Article>> getArticles(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         return ResponseEntity.ok().body(service.getArticles(page, size));
     }
 
@@ -35,7 +35,10 @@ public class ArticleController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<long[]> getStatistics(@RequestParam int forDays) {
+    public ResponseEntity<long[]> getStatistics(@RequestParam(required = false) Integer forDays) {
+        if (forDays == null || forDays == 0) {
+            forDays = 7;
+        }
         return ResponseEntity.ok().body(service.getStatistics(forDays));
     }
 }
