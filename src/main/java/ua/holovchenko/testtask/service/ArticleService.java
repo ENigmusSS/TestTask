@@ -29,7 +29,7 @@ public class ArticleService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return repo.findAll(pageable).stream().map(ArticleConverter::fromEntity).toList();
     }
-    public Article create(Article article) throws IllegalArgumentException {
+    public Article createArticle(Article article) throws IllegalArgumentException {
         ArticleEntity entity;
         if (article.getAuthor()== null ||
                 article.getTitle()== null ||

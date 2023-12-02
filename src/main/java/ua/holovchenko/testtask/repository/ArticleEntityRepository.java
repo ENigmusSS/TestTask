@@ -10,6 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface ArticleEntityRepository extends JpaRepository<ArticleEntity, UUID>, JpaSpecificationExecutor<ArticleEntity> {
-
      long countByPublished(Date published);
 }

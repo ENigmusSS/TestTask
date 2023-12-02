@@ -31,7 +31,7 @@ public class ArticleController {
         if (title.isEmpty()||author.isEmpty()||content.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().body(service.create(new Article(title, author, content, published)));
+        return ResponseEntity.ok().body(service.createArticle(new Article(title, author, content, published)));
     }
 
     @GetMapping("/stats")
