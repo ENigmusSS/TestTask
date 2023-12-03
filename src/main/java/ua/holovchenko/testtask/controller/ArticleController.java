@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ua.holovchenko.testtask.model.Article;
 import ua.holovchenko.testtask.service.ArticleService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,14 +23,14 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Article> createArticle(@RequestBody String title,
-                                                 @RequestBody String author,
-                                                 @RequestBody String content,
-                                                 @RequestBody String published) {
-        if (title.isEmpty()||author.isEmpty()||content.isEmpty()||published.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok().body(service.createArticle(new Article(title, author, content, LocalDate.parse(published))));
+    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+            if (article.getTitle().isEmpty()||
+                    article.getAuthor().isEmpty()||
+                    article.getContent().isEmpty()||
+                    article.getPublished()==null) {
+                return ResponseEntity.badRequest().build();
+            }
+        return ResponseEntity.ok().body(service.createArticle(article));
     }
 
     @GetMapping("/stats")

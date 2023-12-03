@@ -15,8 +15,7 @@ import ua.holovchenko.testtask.repository.ArticleEntityRepository;
 import java.sql.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,8 +85,7 @@ public class ArticleIT {
                 .andExpectAll(
                         status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
-                        content().json(
-                                """
+                        content().json("""
                             {
                                     "title" : "Test1",
                                     "author" : "Testerov",
@@ -97,7 +95,12 @@ public class ArticleIT {
                         """
                         )
                 );
-        assertEquals(new ArticleEntity("Test1", "Testerov", "Test1", Date.valueOf("2023-02-11")), this.repo.findAll().get(0));
+        assertFalse(this.repo.findAll().isEmpty());
+        ArticleEntity wrote = this.repo.findAll().get(0);
+        assertEquals("Test1",wrote.getTitle());
+        assertEquals("Testerov", wrote.getAuthor());
+        assertEquals("Test1", wrote.getContent());
+        assertEquals(Date.valueOf("2023-02-11"), wrote.getPublished());
     this.repo.deleteAll();
     }
 
@@ -117,7 +120,9 @@ public class ArticleIT {
                 .andExpect(
                         status().isBadRequest()
                 );
+
         assertTrue(this.repo.findAll().isEmpty());
+        this.repo.deleteAll();
     }
 
     @Test
