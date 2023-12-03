@@ -47,7 +47,7 @@ public class ArticleControllerTest {
         Article test = new Article("Test1", "Testerov", "Test1", LocalDate.now());
         Mockito.doReturn(test).when(this.articleService).createArticle(test);
 
-        ResponseEntity<Article> responseEntity = this.controller.createArticle(test.getTitle(), test.getAuthor(), test.getContent(), test.getPublished());
+        ResponseEntity<Article> responseEntity = this.controller.createArticle(test.getTitle(), test.getAuthor(), test.getContent(), test.getPublished().toString());
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -57,7 +57,7 @@ public class ArticleControllerTest {
 
     @Test
     void createArticle_PayloadNotValid_ReturnsValidResponseEntity() {
-        ResponseEntity<Article> responseEntity = this.controller.createArticle("Test2", "", "Test2", LocalDate.now());
+        ResponseEntity<Article> responseEntity = this.controller.createArticle("Test2", "", "Test2", LocalDate.now().toString());
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());

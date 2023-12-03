@@ -27,11 +27,11 @@ public class ArticleController {
     public ResponseEntity<Article> createArticle(@RequestBody String title,
                                                  @RequestBody String author,
                                                  @RequestBody String content,
-                                                 @RequestBody LocalDate published) {
-        if (title.isEmpty()||author.isEmpty()||content.isEmpty()) {
+                                                 @RequestBody String published) {
+        if (title.isEmpty()||author.isEmpty()||content.isEmpty()||published.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok().body(service.createArticle(new Article(title, author, content, published)));
+        return ResponseEntity.ok().body(service.createArticle(new Article(title, author, content, LocalDate.parse(published))));
     }
 
     @GetMapping("/stats")
