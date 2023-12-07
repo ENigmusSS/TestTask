@@ -16,8 +16,9 @@ import java.util.List;
 @Service
 public class ArticleService {
     private final ArticleEntityRepository repo;
+
     public ArticleService(@Autowired ArticleEntityRepository repo) {
-        this.repo=repo;
+        this.repo = repo;
     }
 
     public List<Article> getArticles(Integer page, Integer size) {
@@ -29,20 +30,22 @@ public class ArticleService {
         Pageable pageable = PageRequest.of(page - 1, size);
         return repo.findAll(pageable).stream().map(ArticleConverter::fromEntity).toList();
     }
+
     public Article createArticle(Article article) throws IllegalArgumentException {
         ArticleEntity entity;
-        if (article.getAuthor()== null ||
-                article.getTitle()== null ||
+        if (article.getAuthor() == null ||
+                article.getTitle() == null ||
                 article.getContent() == null ||
                 article.getPublished() == null) {
             throw new IllegalArgumentException("All fields is mandatory");
         }
-        if (article.getTitle().length()> 100) {
+        if (article.getTitle().length() > 100) {
             throw new IllegalArgumentException("Title length must not exceed 100");
         }
         entity = ArticleConverter.toEntity(article);
         return ArticleConverter.fromEntity(repo.save(entity));
     }
+
     public long[] getStatistics(int forDays) {
         long[] counts = new long[forDays];
         for (int i = 0; i < counts.length; i++) {

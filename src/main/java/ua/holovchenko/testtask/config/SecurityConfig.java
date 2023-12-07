@@ -21,6 +21,7 @@ public class SecurityConfig {
     protected PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(12);
     }
+
     @Bean
     protected UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();

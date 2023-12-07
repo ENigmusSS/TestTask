@@ -42,34 +42,34 @@ public class ArticleIT {
                         status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().json("""
-                            [
-                                {
-                                    "title" : "Test1",
-                                    "author" : "Testerov",
-                                    "content" : "Test1",
-                                    "published" : "2023-02-11"
-                                },
-                                {
-                                    "title" : "Test2",
-                                    "author" : "Testerenko",
-                                    "content" : "Test2",
-                                    "published" : "2023-02-11"
-                                },
-                                {
-                                    "title" : "Test3",
-                                    "author" : "Testerov",
-                                    "content" : "Test3",
-                                    "published" : "2023-02-10"
-                                }
-                            ]
-                        """
+                                    [
+                                        {
+                                            "title" : "Test1",
+                                            "author" : "Testerov",
+                                            "content" : "Test1",
+                                            "published" : "2023-02-11"
+                                        },
+                                        {
+                                            "title" : "Test2",
+                                            "author" : "Testerenko",
+                                            "content" : "Test2",
+                                            "published" : "2023-02-11"
+                                        },
+                                        {
+                                            "title" : "Test3",
+                                            "author" : "Testerov",
+                                            "content" : "Test3",
+                                            "published" : "2023-02-10"
+                                        }
+                                    ]
+                                """
                         )
                 );
         this.repo.deleteAll();
     }
 
     @Test
-    void  createArticle_PayloadValid_ReturnsValidResponseEntity() throws Exception{
+    void createArticle_PayloadValid_ReturnsValidResponseEntity() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/articles")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
@@ -86,26 +86,25 @@ public class ArticleIT {
                         status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().json("""
-                            {
-                                    "title" : "Test1",
-                                    "author" : "Testerov",
-                                    "content" : "Test1",
-                                    "published" : "2023-02-11"
-                            }
-                        """
+                                    {
+                                            "title" : "Test1",
+                                            "author" : "Testerov",
+                                            "content" : "Test1",
+                                            "published" : "2023-02-11"
+                                    }
+                                """
                         )
                 );
         assertFalse(this.repo.findAll().isEmpty());
         ArticleEntity wrote = this.repo.findAll().get(0);
-        assertEquals("Test1",wrote.getTitle());
+        assertEquals("Test1", wrote.getTitle());
         assertEquals("Testerov", wrote.getAuthor());
         assertEquals("Test1", wrote.getContent());
         assertEquals(Date.valueOf("2023-02-11"), wrote.getPublished());
-    this.repo.deleteAll();
+        this.repo.deleteAll();
     }
-
     @Test
-    void  createArticle_PayloadNotValid_ReturnsValidResponseEntity() throws Exception {
+    void createArticle_PayloadNotValid_ReturnsValidResponseEntity() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/articles")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
@@ -131,11 +130,11 @@ public class ArticleIT {
 
         this.mockMvc.perform(requestBuilder)
                 .andExpectAll(
-                    status().isOk(),
+                        status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().json("""
-                            [ 0, 0, 0 ,0 ,0, 0, 0]
-                            """)
+                                [ 0, 0, 0 ,0 ,0, 0, 0]
+                                """)
                 );
     }
 
@@ -148,8 +147,8 @@ public class ArticleIT {
                         status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON),
                         content().json("""
-                            [0,0,0]
-                            """)
+                                [0,0,0]
+                                """)
                 );
     }
 }

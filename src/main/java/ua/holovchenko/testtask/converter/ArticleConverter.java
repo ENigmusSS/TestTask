@@ -13,6 +13,7 @@ public class ArticleConverter {
                 entity.getContent(),
                 entity.getPublished().toLocalDate());
     }
+
     public static ArticleEntity toEntity(Article article) {
         return new ArticleEntity(
                 article.getTitle(),

@@ -24,13 +24,18 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
-            if (article.getTitle().isEmpty()||
-                    article.getAuthor().isEmpty()||
-                    article.getContent().isEmpty()||
-                    article.getPublished()==null) {
-                return ResponseEntity.badRequest().build();
-            }
-        return ResponseEntity.ok().body(service.createArticle(article));
+        if (article.getTitle().isEmpty() ||
+                article.getAuthor().isEmpty() ||
+                article.getContent().isEmpty() ||
+                article.getPublished() == null ||
+                article.getTitle().length() > 100) {
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            return ResponseEntity.ok().body(service.createArticle(article));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/stats")

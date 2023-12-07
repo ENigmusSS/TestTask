@@ -41,21 +41,21 @@ public class ArticleServiceTest {
 
     @Test
     void getArticles_noArgs_returnsValidData() {
-        Mockito.when(this.repo.findAll(PageRequest.of(0,10))).thenReturn(testArticleEntities);
+        Mockito.when(this.repo.findAll(PageRequest.of(0, 10))).thenReturn(testArticleEntities);
 
-        assertEquals(this.service.getArticles(null,null), testArticles);
+        assertEquals(this.service.getArticles(null, null), testArticles);
     }
 
     @Test
     void getArticles_validArgs_returnsValidData() {
-        Mockito.when(this.repo.findAll(PageRequest.of(0,3))).thenReturn(testArticleEntities);
+        Mockito.when(this.repo.findAll(PageRequest.of(0, 3))).thenReturn(testArticleEntities);
 
-        assertEquals(this.service.getArticles(1,3), testArticles);
+        assertEquals(this.service.getArticles(1, 3), testArticles);
     }
 
     @Test
     void getArticles_invalidArgs_returnsValidData() {
-        Mockito.when(this.repo.findAll(PageRequest.of(0,10))).thenReturn(testArticleEntities);
+        Mockito.when(this.repo.findAll(PageRequest.of(0, 10))).thenReturn(testArticleEntities);
 
         assertEquals(this.service.getArticles(-7, -34), testArticles);
     }
@@ -73,13 +73,13 @@ public class ArticleServiceTest {
     void createArticle_invalidArgs_throwsCorrectException() {
         String invalidTitle = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa";
 
-        assertThrows(IllegalArgumentException.class, () -> this.service.createArticle(new Article( invalidTitle, "Testerenko", "comment", LocalDate.now())));
+        assertThrows(IllegalArgumentException.class, () -> this.service.createArticle(new Article(invalidTitle, "Testerenko", "comment", LocalDate.now())));
         assertThrows(IllegalArgumentException.class, () -> this.service.createArticle(new Article()));
     }
 
     @Test
     void getStatistics_returnValidData() {
-        long[] ls = {1L,1L,1L,1L,1L,1L,1L};
+        long[] ls = {1L, 1L, 1L, 1L, 1L, 1L, 1L};
         for (int i = 0; i < 7; i++) {
             Mockito.when(this.repo.countByPublished(Date.valueOf(LocalDate.now().minusDays(i)))).thenReturn(1L);
             assertEquals(ls[i], this.service.getStatistics(7)[i]);

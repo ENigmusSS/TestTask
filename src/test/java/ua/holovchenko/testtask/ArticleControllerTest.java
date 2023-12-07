@@ -29,12 +29,13 @@ public class ArticleControllerTest {
             new Article("Test1", "Testerov", "Test1", LocalDate.now()),
             new Article("Test2", "Testerenko", "Test2", LocalDate.now()),
             new Article("Test3", "Testerov", "Test3", LocalDate.now().minusDays(1)));
+
     @Test
     void getArticles_ReturnsValidResponseEntity() {
         List<Article> articles = testArticles;
-        Mockito.doReturn(articles).when(this.articleService).getArticles(1,10);
+        Mockito.doReturn(articles).when(this.articleService).getArticles(1, 10);
 
-        ResponseEntity<List<Article>> responseEntity = this.controller.getArticles(1,10);
+        ResponseEntity<List<Article>> responseEntity = this.controller.getArticles(1, 10);
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -43,7 +44,7 @@ public class ArticleControllerTest {
     }
 
     @Test
-    void  createArticle_PayloadValid_ReturnsValidResponseEntity() {
+    void createArticle_PayloadValid_ReturnsValidResponseEntity() {
         Article test = new Article("Test1", "Testerov", "Test1", LocalDate.now());
         Mockito.doReturn(test).when(this.articleService).createArticle(test);
 
@@ -66,7 +67,7 @@ public class ArticleControllerTest {
 
     @Test
     void getStatistics_noArgument_ReturnsValidResponseEntity() {
-        long[] stats = {0L,0L,0L,0L,0L,0L,0L};
+        long[] stats = {0L, 0L, 0L, 0L, 0L, 0L, 0L};
         Mockito.when(this.articleService.getStatistics(7)).thenReturn(stats);
 
         ResponseEntity<long[]> responseEntity = this.controller.getStatistics(null);
@@ -78,7 +79,7 @@ public class ArticleControllerTest {
 
     @Test
     void getStatistics_withArgument_ReturnsValidResponseEntity() {
-        long[] stats = {0L,0L,0L};
+        long[] stats = {0L, 0L, 0L};
         Mockito.when(this.articleService.getStatistics(3)).thenReturn(stats);
 
         ResponseEntity<long[]> responseEntity = this.controller.getStatistics(3);
